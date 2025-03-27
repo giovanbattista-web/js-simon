@@ -10,8 +10,14 @@ const intervallo = setInterval(function () {
     if (secondi!=0){
         contoAllaRovescia.innerText = secondi;
     }
+    else
+    {
+        cleanInterval(intervallo);
+    }
     secondi--;
-
 }, 1000);
 */
+
+setTimeout (inserimentoNumeri(),1000) {};
+
 
