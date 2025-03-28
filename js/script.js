@@ -1,5 +1,7 @@
 let numeriCasuali = document.getElementById("number-list");
 let contoAllaRovescia = document.getElementById("countdown");
+const casuali = [];
+const utente = [];
 let secondi = 30;
 console.log(contoAllaRovescia);
 contoAllaRovescia.innerText = secondi;  
