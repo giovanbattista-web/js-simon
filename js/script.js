@@ -1,6 +1,5 @@
 let numeriCasuali = document.getElementById("number-list");
 let contoAllaRovescia = document.getElementById("countdown");
-/*
 let secondi = 30;
 console.log(contoAllaRovescia);
 contoAllaRovescia.innerText = secondi;  
@@ -12,12 +11,11 @@ const intervallo = setInterval(function () {
     }
     else
     {
-        cleanInterval(intervallo);
+        clearInterval(intervallo);
     }
     secondi--;
 }, 1000);
-*/
 
-setTimeout (inserimentoNumeri(),1000) {};
+
 
 
