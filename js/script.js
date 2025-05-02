@@ -1,5 +1,4 @@
-// DEFINIZIONE DELLE EVENTUALI VARIABILI, DELLE FUNZIONI E/O RECUPERO DEGLI ELEMENTI DEL DOM
-// recupero degli elementi del dom che mi servono 
+// RECUPERO GLI ELEMENTI DEL DOM CHE MI SERVONO 
 const form = document.getElementById("answers-form");
 const inputFields = document.querySelectorAll("input");
 const countdown = document.getElementById("countdown");
@@ -8,7 +7,7 @@ const message = document.getElementById("message");
 const instructions = document.getElementById("instructions");
 const button = document.querySelector("button");
 
-// definizione delle variabili 
+// DEFINISCO LE VARIABILI
 const min = 1;
 const max = 50;
 const totalNumbers = 5;
@@ -16,97 +15,115 @@ let time = 30;
 let numbers;
 let li = '';
 
-// definizione delle funzioni utili
+// DEFINISCO LE FUNZIONI UTILI
 const generateRandomNumbers = (min, max, tot) => {
-    // definisco l'array vuoto che contiene i numeri casuali
+    // DEFINISCO L'ARRAY
     const numbers = [];
-    // genero i 5 numeri casuali 
+    
+    // GENERO I 5 NUMERI CASUALI 
     // for (let i = 0; i < tot; i++) {
     // const num = Math.floor(Math.random() * (max - min + 1)) + min;
-    // inserisco il numero generato nell'array
+    
+    // INSERISCO IL NUMERO GENERATO NELL'ARRAY 
     // numbers.push(num);
     // }
+   
     while (numbers.length < tot) {
         const num = Math.floor(Math.random() * (max - min + 1)) + min;
-        // se l'array numbers non include il numero generato, allora lo inserisco
+        
+        // SE L'ARRAY numbers NON INCLUDE IL NUMERO GENERATO, ALLORA LO INSERISCO
         if (!numbers.includes(num)) {
             numbers.push(num);
         }
     }
-    // restituisco l'array
+    // RESTITUISCO L'ARRAY 
     return numbers;
 }
 
 // CORPO DEL PROGRAMMA
-// mi genero i numeri casuali invocando la funzione 
+
+
+// MI GENERO I NUMERI CASUALI INVOCANDO LA FUNZIONE 
 numbers = generateRandomNumbers(min, max, totalNumbers);
 console.log(numbers);
 
-// genero i list item da appendere all'elemento del dom
+// GENERO I LIST ITEM DA APPENDERE ALL'ELEMENTO DEL DOM 
 for (let i = 0; i < numbers.length; i++) {
     li += `<li>${numbers[i]}</li>`
 }
 
-// vado ad inserire i list item generati nel dom
+// VADO AD INSERIRE I LIST ITEM GENERATI NEL DOM 
 numberList.innerHTML = li;
 
-// vado a mostrare nel dom il timer
+// VADO A MOSTRARE NEL DOM IL TIMER 
 countdown.innerText = time;
 
-// faccio partire il countdown 
+// FACCIO PARTIRE IL COUNTDOWN
 const timer = setInterval(() => {
-    // decremento il valore del timer
+    
+    // DECREMENTO IL VALORE DEL TIMER 
     time--;
     countdown.innerText = time;
-    // verifico che il timer sia arrivato a 0
+    
+    // VERIFICO CHE IL TIMER SIA ARRIVATO A 0
     if (time === 0) {
-        // cancello il set interval
+        // CANCELLO IL SET INTERVAL
         clearInterval(timer);
-        // rimuovo la classe d-none dalla form
+        
+        // RIMUOVO LA CLASSE d-none DALLA FORM 
         form.classList.remove('d-none');
-        // aggiungo la classe d-none a numberList
+        
+        // AGGIUNGO LA CLASSE d-none A numberList 
         numberList.classList.add('d-none');
-        // cambio il testo nelle istruzioni
+        
+        // CAMBIO IL TESTO NELLE ISTRUZIONI 
         instructions.innerText = "Inserisci i valori che ricordi. Non è importante l'ordine";
     }
 }, 1000);
 
 button.addEventListener('click', (e) => {
-    // passaggio obbligatorio : se non lo metto la form viene sottomessa e viene refreshata la pagina 
+    // e.preventDefault() COME PASSAGGIO OBBLIGATORIO : SE NON LO METTO LA FORM VIENE SOTTOMESSA E VIENE REFRESHATA 
+    // LA PAGINA 
     e.preventDefault();
-    // definisco l'array vuoto dei numeri inseriti dall'utente 
+    
+    // DEFINISCO L'ARRAY VUOTO DEI NUMERI INSERITI DALL'UTENTE 
     const userNumbers = [];
-    // ciclo i campi input
+    
+    // CICLO I CAMPI INPUT 
     for (let i = 0; i < inputFields.length; i++) {
         const input = inputFields[i];
         const value = parseInt(input.value);
         if (isNaN(value) === false && value >= min && value <= max && userNumbers.includes(value) === false) {
-            // vado ad inserire il numero nell'array
+            // VADO AD INSERIRE I NUMERI NELL'ARRAY 
             userNumbers.push(value);
         }
     }
 
+    // CONTROLLO SUGLI ELEMENTI NON VALIDI O DUPLICATI 
     if(userNumbers.length !== totalNumbers){
         message.classList.add('text-danger');
         message.innerText = 'Ci sono elementi non validi o duplicati';
         return;
     }
    
-    // definisco un array che contiene i numeri indovinati
+    // DEFINISCO UN ARRAY CHE CONTIENE I NUMERI INDOVINATI 
     const guessed = [];
-    // ciclo l'array dei numeri casuali
+    
+    // CICLO L'ARRAY DEI NUMERI CASUALI 
     for (let i = 0; i < userNumbers.length; i++) {
         const num = userNumbers[i];
-        // verifico che il numero dell'utente che sto attualmente ciclando sia presente nell'array dei numeri generati
-        // casualmente 
+       
+        // VERIFICO CHE IL NUMERO DELL'UTENTE CHE STO ATTUALMENTE CICLANDO SIA PRESENTE NELL'ARRAY DEI NUMERI GENERATI
+        // CASUALMENTE 
         if (numbers.includes(num)) {
             guessed.push(num);
         }
     }
     
-    // visualizzo il risultato
+    // VISUALIZZO IL RISULTATO
     message.classList.remove('text-danger');
-    // se la lunghezza dell'array è uguale al numero totale di elementi allora ho vinto
+    
+    // SE LA LUNGHEZZA DELL'ARRAY E' UGUALE AL NUMERO TOTALE DI ELEMENTI ALLORA HO VINTO 
     if(guessed.length === totalNumbers) {
         message.classList.add('text-success');
     }
